@@ -76,6 +76,7 @@ export default class CreateTablesAndInsertMasterData {
                         phone: info.phone,
                         email: info.email,
                         address: info.address,
+                        logo: info.logo,
                         createdBy: '1',
 
                     });
@@ -98,10 +99,10 @@ export default class CreateTablesAndInsertMasterData {
                 phone VARCHAR(255) NOT NULL,
                 email VARCHAR(255) NOT NULL,
                 address VARCHAR(255) NOT NULL,
+                logo VARCHAR(255),
                 createdBy VARCHAR(255) NOT NULL,
                 updatedBy VARCHAR(255),
-                updatedOn DATETIME NOT NULL DEFAULT current_timestamp,
-                CONSTRAINT primary_name UNIQUE (name))
+                updatedOn DATETIME NOT NULL DEFAULT current_timestamp)
             `, (err, res) => {
                 if (err) {
                     return reject(err);
@@ -117,13 +118,13 @@ export default class CreateTablesAndInsertMasterData {
 
     private static insertDefautOrganisationInfo() {
         return new Promise(async (resolve, reject) => {
-            let InstituteInfo: Array<any>;
+            let OrganisationInfo: Array<any>;
             let keys: Array<any>;
             let values: Array<any>;
 
-            InstituteInfo = await CreateTablesAndInsertMasterData.constructDefaultOrganisationInfo();
-            keys = Object.keys(InstituteInfo[0]);
-            values = InstituteInfo.map(obj => keys.map(key => obj[key]));
+            OrganisationInfo = await CreateTablesAndInsertMasterData.constructDefaultOrganisationInfo();
+            keys = Object.keys(OrganisationInfo[0]);
+            values = OrganisationInfo.map(obj => keys.map(key => obj[key]));
 
             db.query(`INSERT IGNORE INTO ${Tables.ORGANISATION} (${keys.join(',')}) VALUES ?`, [values], (err, res) => {
                 if (err) {
