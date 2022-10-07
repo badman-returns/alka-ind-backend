@@ -1,3 +1,3 @@
 export enum Tables{
-    ADMIN = 'admin',
+    USER = 'user',
 }

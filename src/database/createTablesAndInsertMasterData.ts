@@ -10,7 +10,7 @@ export default class CreateTablesAndInsertMasterData {
     // Super Admin Table
     private static async createAdminUserTable(): Promise<boolean>{
         return new Promise((resolve, reject) => {
-            db.query(`CREATE TABLE IF NOT EXISTS ${Tables.ADMIN}    (
+            db.query(`CREATE TABLE IF NOT EXISTS ${Tables.USER}    (
                 id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id),
                 name VARCHAR(255) NOT NULL,
                 email VARCHAR(255) NOT NULL,
@@ -37,7 +37,7 @@ export default class CreateTablesAndInsertMasterData {
                 password: Encryption.encryptPassword(process.env.ADMIN_DEFAULT_PASSWORD),
             };
 
-            db.query(`INSERT IGNORE INTO ${Tables.ADMIN} SET ?`, user, (err, res) => {
+            db.query(`INSERT IGNORE INTO ${Tables.USER} SET ?`, user, (err, res) => {
                 if (err) {
                     return reject(err);
                 }
