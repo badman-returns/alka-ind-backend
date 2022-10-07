@@ -1,6 +1,8 @@
 import { Encryption } from "../utility";
 import { Tables } from "../configs/table.config";
 import db from '../models/db';
+import { OrganisationInfo } from "../interfaces/organisationSetup.model";
+import { ReadFile } from "../utility/readWriteJSON";
 
 export default class CreateTablesAndInsertMasterData {
     constructor(){
@@ -61,5 +63,92 @@ export default class CreateTablesAndInsertMasterData {
         } catch (e) {
             console.error('CREATE SUPER ADMIN', e);
         }
+    }
+
+    private static constructDefaultOrganisationInfo(): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let OrganisationInfo: Array<any> = [];
+                const infos = await ReadFile<Array<OrganisationInfo>>(`../../data/OrganisationInfo.json`);
+                infos.forEach((info, index, array) => {
+                    OrganisationInfo.push({
+                        name: info.name,
+                        phone: info.phone,
+                        email: info.email,
+                        address: info.address,
+                        createdBy: '1',
+
+                    });
+
+                    if (array.length === index + 1) {
+                        resolve(OrganisationInfo);
+                    }
+                });
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    private static createOrganisationTable() {
+        return new Promise((resolve, reject) => {
+            db.query(`CREATE TABLE IF NOT EXISTS ${Tables.ORGANISATION} (
+                id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id),
+                name VARCHAR(255) NOT NULL,
+                phone VARCHAR(255) NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                address VARCHAR(255) NOT NULL,
+                createdBy VARCHAR(255) NOT NULL,
+                updatedBy VARCHAR(255),
+                updatedOn DATETIME NOT NULL DEFAULT current_timestamp,
+                CONSTRAINT primary_name UNIQUE (name))
+            `, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (res.length) {
+                    return resolve(true);
+                }
+                return resolve(null);
+            });
+        });
+    }
+
+
+    private static insertDefautOrganisationInfo() {
+        return new Promise(async (resolve, reject) => {
+            let InstituteInfo: Array<any>;
+            let keys: Array<any>;
+            let values: Array<any>;
+
+            InstituteInfo = await CreateTablesAndInsertMasterData.constructDefaultOrganisationInfo();
+            keys = Object.keys(InstituteInfo[0]);
+            values = InstituteInfo.map(obj => keys.map(key => obj[key]));
+
+            db.query(`INSERT IGNORE INTO ${Tables.ORGANISATION} (${keys.join(',')}) VALUES ?`, [values], (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (res.length) {
+                    return resolve(true);
+                }
+                return resolve(null);
+            });
+        })
+    }
+
+    public static async createOrganisationTableAndInsertInfos() {
+        try {
+            await CreateTablesAndInsertMasterData.createOrganisationTable();
+        } catch (e) {
+            console.error('CREATE ORGANISATION TABLE', e);
+        }
+
+        try {
+            await CreateTablesAndInsertMasterData.insertDefautOrganisationInfo();
+        } catch (e) {
+            console.error('INSERT ORGANISATION INFO', e);
+        }
+
     }
 };

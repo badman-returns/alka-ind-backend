@@ -61,6 +61,9 @@ class App {
     try {
       console.log(`Creating User table and Super Admin User...`);
       await MasterTables.createUserTableAndSuperAdmin();
+
+      console.log(`Creating Organisation Table and Insert Infos...`);
+      await MasterTables.createOrganisationTableAndInsertInfos(); 
    
     } catch (error) {
       throw new Error(error);
