@@ -1,6 +1,6 @@
 import * as express from 'express';
-import { ValidateBasicAuth, LoadAuthorization } from '../../middlewares';
-import {LoginByEmailPassword } from './admin.controller';
+import { ValidateBasicAuth, LoadAuthorization, ValidateBearerToken, LoadAuthorizedUser } from '../../middlewares';
+import {LoginByEmailPassword, UpdateUserName, UpdateUserPassword } from './admin.controller';
 
 class AdminRouting {
     public router: express.Router;
@@ -12,6 +12,8 @@ class AdminRouting {
     private configRoutes(){
         // Authentication Routes
         this.router.get('/authentication', [...ValidateBasicAuth, ...LoadAuthorization], LoginByEmailPassword);
+        this.router.put('/update-username', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], UpdateUserName);
+        this.router.put('/update-password', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], UpdateUserPassword);
     }
 }
 

@@ -17,6 +17,28 @@ export class UserDB{
                     return resolve(Object.assign({}, res[0]));
                 }
                 return resolve(null);
+            });
+        });
+    }
+
+    public static updateUserName(name: string, email:string): Promise<User>{
+        return new Promise((resolve, reject) => {
+            db.query(`UPDATE ${Tables.USER} SET name='${name}' WHERE ${Tables.USER}.email='${email}'`,(err, res) => {
+                if(err){
+                    return reject(err);
+                }
+                return resolve(null);
+            });
+        });
+    }
+
+    public static updatePassword(email: string, password: string): Promise<User>{
+        return new Promise((resolve, reject) => {
+            db.query(`UPDATE ${Tables.USER} SET password='${password}' WHERE ${Tables.USER}.email='${email}'`, (err, res) => {
+                if(err){
+                    return reject(err);
+                }
+                return resolve(null);
             })
         })
     }
