@@ -1,11 +1,10 @@
-// import { PublicRouter, AdminRouter } from './routes';
 import bodyParser from 'body-parser';
 import path from 'path';
 import cors from 'cors';
 import logger from 'morgan';
 import express, { NextFunction, Response, Request } from 'express';
 import MasterTables from './database/createTablesAndInsertMasterData';
-import { AdminRouter } from './routes';
+import { AdminRouter, PublicRouter } from './routes';
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -77,7 +76,7 @@ class App {
     this.app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
     this.app.use('/applications', express.static(path.join(__dirname, '../applications')));
     this.app.use('/api/v1', this.apiV1Routes);
-    // this.apiV1Routes.use("/", PublicRouter);
+    this.apiV1Routes.use("/", PublicRouter);
     this.apiV1Routes.use('/admin', AdminRouter);
   }
 }
