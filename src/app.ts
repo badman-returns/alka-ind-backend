@@ -5,6 +5,7 @@ import logger from 'morgan';
 import express, { NextFunction, Response, Request } from 'express';
 import MasterTables from './database/createTablesAndInsertMasterData';
 import { AdminRouter, PublicRouter } from './routes';
+const cloudinary = require('cloudinary');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -21,10 +22,20 @@ class App {
     this.routes();
   }
 
+  public cloudinaryConfig() {
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+      api_key: process.env.CLOUDINARY_API_KEY, 
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+      secure: true
+    });
+  }
+
   public listen() {
     this.app.listen(process.env.SERVER_PORT, () => {
       console.log(`App listening on the port ${process.env.SERVER_PORT}`);
     });
+    this.cloudinaryConfig();
   }
 
   public getServer() {
