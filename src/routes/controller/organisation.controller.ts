@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { OrganisationDB } from "../../models";
 import { ExtendedRequest, ResponseObject } from "../../interfaces";
+import cloudinary from 'cloudinary';
 
 class OrganisationController{
     constructor(){
@@ -27,12 +28,20 @@ class OrganisationController{
         const phone = req.body.phone;
         const email = req.body.email;
         const address = req.body.address;
-        const logo = req.body.logo;
+        const file = req.file;
+        const updatedBy = req.user.id;
 
         let response : ResponseObject<any>;
-
+        let fileId: string;
+        let fileURL: string;
         try{
-            await OrganisationDB.updateOrganisationInfo(name, phone, email, address, logo);
+            if(file){
+                const {public_id, url} = await cloudinary.v2.uploader.upload(file.path, {folder:'alka-industries/images'})
+                    fileId = public_id,
+                    fileURL = url
+                
+            }
+            await OrganisationDB.updateOrganisationInfo(name, phone, email, address, updatedBy, fileId, fileURL);
             response = {
                 ResponseData: null,
                 ResponseMessage: 'Organisation Info Updated'

@@ -10,7 +10,8 @@ interface OrganisationInfo{
     createdOn: string,
     updatedOn: string,
     files: Array<UploadFile>
-    logo: string,
+    fileId: string,
+    fileURL: string,
 }
 
 export {
