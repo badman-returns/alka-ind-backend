@@ -76,7 +76,6 @@ export default class CreateTablesAndInsertMasterData {
                         phone: info.phone,
                         email: info.email,
                         address: info.address,
-                        logo: info.logo,
                         createdBy: '1',
 
                     });
@@ -99,10 +98,12 @@ export default class CreateTablesAndInsertMasterData {
                 phone VARCHAR(255) NOT NULL,
                 email VARCHAR(255) NOT NULL,
                 address VARCHAR(255) NOT NULL,
-                logo VARCHAR(255),
+                fileId VARCHAR(255),
+                fileURL VARCHAR(255),
                 createdBy VARCHAR(255) NOT NULL,
                 updatedBy VARCHAR(255),
-                updatedOn DATETIME NOT NULL DEFAULT current_timestamp)
+                updatedOn DATETIME NOT NULL DEFAULT current_timestamp,
+                CONSTRAINT company_name UNIQUE (name))
             `, (err, res) => {
                 if (err) {
                     return reject(err);
