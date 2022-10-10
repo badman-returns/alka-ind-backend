@@ -1,4 +1,5 @@
 export enum Tables{
     USER = 'user',
-    ORGANISATION = 'organisation'
+    ORGANISATION = 'organisation',
+    ABOUT = 'about'
 }
