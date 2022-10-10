@@ -74,6 +74,9 @@ class App {
 
       console.log(`Creating Organisation Table and Insert Infos...`);
       await MasterTables.createOrganisationTableAndInsertInfos(); 
+
+      console.log(`Creating About Table...`);
+      await MasterTables.createAboutTableAndInsertDefaultData();
    
     } catch (error) {
       throw new Error(error);

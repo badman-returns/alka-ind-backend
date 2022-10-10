@@ -3,6 +3,7 @@ import { Tables } from "../configs/table.config";
 import db from '../models/db';
 import { OrganisationInfo } from "../interfaces/organisationSetup.model";
 import { ReadFile } from "../utility/readWriteJSON";
+import { About } from "../interfaces/";
 
 export default class CreateTablesAndInsertMasterData {
     constructor(){
@@ -150,6 +151,68 @@ export default class CreateTablesAndInsertMasterData {
             await CreateTablesAndInsertMasterData.insertDefautOrganisationInfo();
         } catch (e) {
             console.error('INSERT ORGANISATION INFO', e);
+        }
+
+    }
+
+    private static createAboutTable() :Promise<boolean>{
+        return new Promise((resolve, reject) => {
+            db.query(`CREATE TABLE IF NOT EXISTS ${Tables.ABOUT} (
+                id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id),
+                title VARCHAR(255) NOT NULL,
+                content VARCHAR(255) NOT NULL,
+                fileId VARCHAR(255),
+                fileURL VARCHAR(255),
+                createdBy VARCHAR(255) NOT NULL,
+                updatedBy VARCHAR(255),
+                updatedOn DATETIME NOT NULL DEFAULT current_timestamp,
+                CONSTRAINT about_title UNIQUE (title))
+            `, (err, res) => {
+                if(err){
+                    return reject(err);
+                }
+                if(res.length){
+                    return resolve(true);
+                }
+                return resolve(null);
+            });
+        });
+    }
+
+    private static insertDefaultAboutContent(){
+        return new Promise((resolve, reject) => {
+            let AboutInfo: About = {
+                title: `About`,
+                content: 'About Content',
+                fileId: null,
+                fileURL: null,
+                createdBy: 1,
+                updatedBy: null,
+            }
+            
+            db.query(`INSERT IGNORE INTO ${Tables.ABOUT} SET ?`, AboutInfo, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (res.length) {
+                    return resolve(true);
+                }
+                return resolve(null);
+            });
+        });
+    }
+
+    public static async createAboutTableAndInsertDefaultData() {
+        try {
+            await CreateTablesAndInsertMasterData.createAboutTable();
+        } catch (e) {
+            console.error('CREATE ABOUT TABLE', e);
+        }
+
+        try {
+            await CreateTablesAndInsertMasterData.insertDefaultAboutContent();
+        } catch (e) {
+            console.error('INSERT ABOUT CONTENT', e);
         }
 
     }
