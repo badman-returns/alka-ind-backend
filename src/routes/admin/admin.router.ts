@@ -4,6 +4,7 @@ import { GetStorage } from '../../utility/uploader';
 import { ValidateBasicAuth, LoadAuthorization, ValidateBearerToken, LoadAuthorizedUser } from '../../middlewares';
 import {LoginByEmailPassword, UpdateUserName, UpdateUserPassword } from './admin.controller';
 import { UpdateOrganisationInfo } from '../controller/organisation.controller';
+import { UpdateAbout } from '../controller/about.controller';
 
 class AdminRouting {
     public router: express.Router;
@@ -21,6 +22,9 @@ class AdminRouting {
 
         // Organisation Details Routes
         this.router.put('/update-org-info', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], this.upload.single('org-details'), UpdateOrganisationInfo);
+
+        // About Routes
+        this.router.put('/about', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], UpdateAbout);
     }
 }
 

@@ -1,6 +1,7 @@
 import * as express from 'express';
 import multer from 'multer';
 import { GetStorage } from '../../utility/uploader';
+import { GetAbout } from '../controller/about.controller';
 import { GetOrganisationInfo } from '../controller/organisation.controller';
 
 class PublicRouting {
@@ -15,6 +16,9 @@ class PublicRouting {
 
         // Organisation Details Routes
         this.router.get('/org-info', GetOrganisationInfo);
+
+        // About Routes
+        this.router.get('/about', GetAbout);
     }
 }
 
