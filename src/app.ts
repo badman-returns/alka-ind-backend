@@ -77,6 +77,9 @@ class App {
 
       console.log(`Creating About Table...`);
       await MasterTables.createAboutTableAndInsertDefaultData();
+
+      console.log(`Creating Banner Table...`);
+      await MasterTables.createBannerTable();
    
     } catch (error) {
       throw new Error(error);

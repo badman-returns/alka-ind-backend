@@ -6,12 +6,12 @@ import { ReadFile } from "../utility/readWriteJSON";
 import { About } from "../interfaces/";
 
 export default class CreateTablesAndInsertMasterData {
-    constructor(){
+    constructor() {
 
     }
 
     // Super Admin Table
-    private static async createAdminUserTable(): Promise<boolean>{
+    private static async createAdminUserTable(): Promise<boolean> {
         return new Promise((resolve, reject) => {
             db.query(`CREATE TABLE IF NOT EXISTS ${Tables.USER}    (
                 id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id),
@@ -21,14 +21,14 @@ export default class CreateTablesAndInsertMasterData {
                 createdOn DATETIME default current_timestamp,
                 CONSTRAINT primary_admin UNIQUE(email))
                 `, (err, res) => {
-                    if(err){
-                        return reject(err);
-                    }
-                    if(res.length){
-                        return resolve(true);
-                    }
-                    return resolve(null);
-                });
+                if (err) {
+                    return reject(err);
+                }
+                if (res.length) {
+                    return resolve(true);
+                }
+                return resolve(null);
+            });
         });
     };
 
@@ -155,7 +155,7 @@ export default class CreateTablesAndInsertMasterData {
 
     }
 
-    private static createAboutTable() :Promise<boolean>{
+    private static createAboutTable(): Promise<boolean> {
         return new Promise((resolve, reject) => {
             db.query(`CREATE TABLE IF NOT EXISTS ${Tables.ABOUT} (
                 id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id),
@@ -168,10 +168,10 @@ export default class CreateTablesAndInsertMasterData {
                 updatedOn DATETIME NOT NULL DEFAULT current_timestamp,
                 CONSTRAINT about_title UNIQUE (title))
             `, (err, res) => {
-                if(err){
+                if (err) {
                     return reject(err);
                 }
-                if(res.length){
+                if (res.length) {
                     return resolve(true);
                 }
                 return resolve(null);
@@ -179,7 +179,7 @@ export default class CreateTablesAndInsertMasterData {
         });
     }
 
-    private static insertDefaultAboutContent(){
+    private static insertDefaultAboutContent() {
         return new Promise((resolve, reject) => {
             let AboutInfo: About = {
                 title: `About`,
@@ -189,7 +189,7 @@ export default class CreateTablesAndInsertMasterData {
                 createdBy: 1,
                 updatedBy: null,
             }
-            
+
             db.query(`INSERT IGNORE INTO ${Tables.ABOUT} SET ?`, AboutInfo, (err, res) => {
                 if (err) {
                     return reject(err);
@@ -215,5 +215,27 @@ export default class CreateTablesAndInsertMasterData {
             console.error('INSERT ABOUT CONTENT', e);
         }
 
+    }
+
+    public static async createBannerTable() {
+        return new Promise((resolve, reject) => {
+            db.query(`CREATE TABLE IF NOT EXISTS ${Tables.BANNER} (
+                id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id),
+                fileId VARCHAR(255) NOT NULL,
+                fileName VARCHAR(255) NOT NULL,
+                fileURL VARCHAR(255) NOT NULL,
+                createdBy VARCHAR(255) NOT NULL,
+                createdOn DATETIME NOT NULL DEFAULT current_timestamp)
+                `, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (res.length) {
+                    return resolve(true);
+                }
+                return resolve(null);
+            }
+            );
+        });
     }
 };
