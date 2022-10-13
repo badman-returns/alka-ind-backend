@@ -2,6 +2,7 @@ import * as express from 'express';
 import multer from 'multer';
 import { GetStorage } from '../../utility/uploader';
 import { GetAbout } from '../controller/about.controller';
+import { GetAllBanners, GetBannerById } from '../controller/banner.controller';
 import { GetOrganisationInfo } from '../controller/organisation.controller';
 
 class PublicRouting {
@@ -19,6 +20,10 @@ class PublicRouting {
 
         // About Routes
         this.router.get('/about', GetAbout);
+
+        // Banner Routes
+        this.router.get('/banners', GetAllBanners);
+        this.router.get('/banner/:id', GetBannerById);
     }
 }
 

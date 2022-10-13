@@ -5,6 +5,7 @@ import { ValidateBasicAuth, LoadAuthorization, ValidateBearerToken, LoadAuthoriz
 import {LoginByEmailPassword, UpdateUserName, UpdateUserPassword } from './admin.controller';
 import { UpdateOrganisationInfo } from '../controller/organisation.controller';
 import { UpdateAbout } from '../controller/about.controller';
+import { DeleteBanner, InsertBanner } from '../controller/banner.controller';
 
 class AdminRouting {
     public router: express.Router;
@@ -25,8 +26,13 @@ class AdminRouting {
 
         // About Routes
         this.router.put('/about', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], UpdateAbout);
+
+        // Banner Routes
+        this.router.post('/banner', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], this.upload.single('banner'), InsertBanner);
+        this.router.delete('/banner/:id', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], DeleteBanner);
     }
 }
 
 const AdminRouter = new AdminRouting().router;
 export { AdminRouter }
+    
