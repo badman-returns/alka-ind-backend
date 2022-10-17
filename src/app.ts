@@ -80,6 +80,9 @@ class App {
 
       console.log(`Creating Banner Table...`);
       await MasterTables.createBannerTable();
+
+      console.log(`Creating Partners Table...`);
+      await MasterTables.createPartnerTable();
    
     } catch (error) {
       throw new Error(error);

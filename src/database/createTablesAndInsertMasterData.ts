@@ -238,4 +238,27 @@ export default class CreateTablesAndInsertMasterData {
             );
         });
     }
+
+    public static async createPartnerTable(){
+        return new Promise((resolve, reject) => {
+            db.query(`CREATE TABLE IF NOT EXISTS ${Tables.PARTNER} (
+                id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id),
+                name VARCHAR(255) NOT NULL,
+                testimony VARCHAR(255),
+                fileId VARCHAR(255) NOT NULL,
+                fileURL VARCHAR(255) NOT NULL,
+                createdBy VARCHAR(255) NOT NULL,
+                createdOn DATETIME NOT NULL DEFAULT current_timestamp,
+                updatedOn DATETIME NOT NULL DEFAULT current_timestamp)
+                `, (err, res) =>{
+                    if(err){
+                        return reject(err);
+                    }
+                    if(res.length){
+                        return resolve(true);
+                    }
+                    return resolve(null);
+                })
+        })
+    }
 };
