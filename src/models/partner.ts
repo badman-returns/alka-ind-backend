@@ -56,7 +56,7 @@ export class PartnerDB {
         });
     };
 
-    public static deletePartnerById(id: string): Promise<any>{
+    public static deletePartnerById(id: number): Promise<any>{
         return new Promise((resolve, reject) => {
             db.query(`DELETE FROM ${Tables.PARTNER} WHERE ${Tables.PARTNER}.id=${id}`, (err, res) => {
                 if(err){
@@ -66,5 +66,4 @@ export class PartnerDB {
             })
         })
     }
-
 }
