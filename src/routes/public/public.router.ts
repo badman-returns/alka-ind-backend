@@ -4,6 +4,7 @@ import { GetStorage } from '../../utility/uploader';
 import { GetAbout } from '../controller/about.controller';
 import { GetAllBanners, GetBannerById } from '../controller/banner.controller';
 import { GetOrganisationInfo } from '../controller/organisation.controller';
+import { GetPartnerById, GetPartners } from '../controller/partner.controller';
 
 class PublicRouting {
     public router: express.Router;
@@ -24,6 +25,10 @@ class PublicRouting {
         // Banner Routes
         this.router.get('/banners', GetAllBanners);
         this.router.get('/banner/:id', GetBannerById);
+
+        // Partner Routes
+        this.router.get('/partners', GetPartners);
+        this.router.get('/partner/:id', GetPartnerById);
     }
 }
 
