@@ -6,6 +6,7 @@ import {LoginByEmailPassword, UpdateUserName, UpdateUserPassword } from './admin
 import { UpdateOrganisationInfo } from '../controller/organisation.controller';
 import { UpdateAbout } from '../controller/about.controller';
 import { DeleteBanner, InsertBanner } from '../controller/banner.controller';
+import { DeletePartner, InsertPartner, UpdatePartner } from '../controller/partner.controller';
 
 class AdminRouting {
     public router: express.Router;
@@ -30,6 +31,11 @@ class AdminRouting {
         // Banner Routes
         this.router.post('/banner', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], this.upload.single('banner'), InsertBanner);
         this.router.delete('/banner/:id', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], DeleteBanner);
+
+        // Partner Routes
+        this.router.post('/partner', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], this.upload.single('partner'), InsertPartner);
+        this.router.put('/partner/:id', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser],this.upload.single('partner'), UpdatePartner);
+        this.router.delete('/partner/:id', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], DeletePartner);
     }
 }
 
