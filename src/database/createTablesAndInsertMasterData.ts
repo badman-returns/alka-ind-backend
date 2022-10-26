@@ -261,4 +261,23 @@ export default class CreateTablesAndInsertMasterData {
                 })
         })
     }
+
+    public static async createCategoryTable(){
+        return new Promise((resolve, reject) => {
+            db.query(`CREATE TABLE IF NOT EXISTS ${Tables.CATEGORY} (
+                id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id),
+                name VARCHAR(255) NOT NULL,
+                createdBy VARCHAR(255) NOT NULL,
+                createdOn DATETIME NOT NULL DEFAULT current_timestamp)
+                `, (err, res) => {
+                    if(err){
+                        return reject(err);
+                    }
+                    if(res.length){
+                        return resolve(true);
+                    }
+                    return resolve(null);
+                });
+        });
+    }
 };
