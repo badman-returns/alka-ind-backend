@@ -83,6 +83,9 @@ class App {
 
       console.log(`Creating Partners Table...`);
       await MasterTables.createPartnerTable();
+
+      console.log(`Creating Category Table...`);
+      await MasterTables.createCategoryTable();
    
     } catch (error) {
       throw new Error(error);

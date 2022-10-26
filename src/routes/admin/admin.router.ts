@@ -7,6 +7,7 @@ import { UpdateOrganisationInfo } from '../controller/organisation.controller';
 import { UpdateAbout } from '../controller/about.controller';
 import { DeleteBanner, InsertBanner } from '../controller/banner.controller';
 import { DeletePartner, InsertPartner, UpdatePartner } from '../controller/partner.controller';
+import { InsertCategory } from '../controller/category.controller';
 
 class AdminRouting {
     public router: express.Router;
@@ -36,6 +37,9 @@ class AdminRouting {
         this.router.post('/partner', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], this.upload.single('partner'), InsertPartner);
         this.router.put('/partner/:id', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser],this.upload.single('partner'), UpdatePartner);
         this.router.delete('/partner/:id', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], DeletePartner);
+
+        // Category Routes
+        this.router.post('/category', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], InsertCategory);
     }
 }
 

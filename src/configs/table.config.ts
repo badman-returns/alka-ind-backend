@@ -4,4 +4,5 @@ export enum Tables{
     ABOUT = 'about',
     BANNER = 'banner',
     PARTNER = 'partner',
+    CATEGORY = 'category',
 }
