@@ -3,6 +3,7 @@ import multer from 'multer';
 import { GetStorage } from '../../utility/uploader';
 import { GetAbout } from '../controller/about.controller';
 import { GetAllBanners, GetBannerById } from '../controller/banner.controller';
+import { GetCategories, GetCategoryById } from '../controller/category.controller';
 import { GetOrganisationInfo } from '../controller/organisation.controller';
 import { GetPartnerById, GetPartners } from '../controller/partner.controller';
 
@@ -29,6 +30,10 @@ class PublicRouting {
         // Partner Routes
         this.router.get('/partners', GetPartners);
         this.router.get('/partner/:id', GetPartnerById);
+
+        // Category Routes
+        this.router.get('/categories',GetCategories);
+        this.router.get('/category/:id', GetCategoryById);
     }
 }
 
