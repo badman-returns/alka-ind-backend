@@ -1,9 +1,6 @@
 import {Category} from '../interfaces';
 import { Tables } from '../configs/table.config';
 import db from '../models/db';
-import { resolve } from 'path';
-import { Result } from 'express-validator';
-
 
 export class CategoryDB{
     constructor(){

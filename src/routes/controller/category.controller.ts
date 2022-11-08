@@ -57,6 +57,7 @@ class CategoryController{
         }
         return res.send(response);
     }
+
     public static updateCategoryById= async(req: ExtendedRequest, res: Response) =>{
         const id=req.params.id;
         const name=req.body.name;
@@ -75,6 +76,7 @@ class CategoryController{
         }
         return res.send(response);
     }
+
     public static deleteCategoryById= async(req: ExtendedRequest, res: Response) =>{
         const id = Number(req.params.id);
 
@@ -91,7 +93,6 @@ class CategoryController{
             return res.status(500).end();
         }
         return res.send(response);
-
     }
 }
 
