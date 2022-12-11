@@ -24,7 +24,7 @@ class AdminRouting {
         this.router.put('/update-password', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], UpdateUserPassword);
 
         // Organisation Details Routes
-        this.router.put('/update-org-info', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], this.upload.single('org-details'), UpdateOrganisationInfo);
+        this.router.put('/org-info', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], this.upload.single('logo'), UpdateOrganisationInfo);
 
         // About Routes
         this.router.put('/about', [...ValidateBearerToken, ...LoadAuthorization, ...LoadAuthorizedUser], UpdateAbout);
