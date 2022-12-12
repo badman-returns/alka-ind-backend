@@ -53,7 +53,7 @@ class PartnerController{
         
         try {
             if(file){
-                const {public_id, url} = await cloudinary.v2.uploader.upload(file.path, {folder: 'alka-industries/images'});
+                const {public_id, url} = await cloudinary.v2.uploader.upload(file.path, {folder: 'alka-industries/partners'});
                 fileId = public_id;
                 fileURL = url;
             }
@@ -81,7 +81,7 @@ class PartnerController{
 
         try {
             if(file){
-                const {public_id, url} = await cloudinary.v2.uploader.upload(file.path, {folder: 'alka-industries/images'});
+                const {public_id, url} = await cloudinary.v2.uploader.upload(file.path, {folder: 'alka-industries/partners'});
                 fileId = public_id
                 fileURL = url
             }

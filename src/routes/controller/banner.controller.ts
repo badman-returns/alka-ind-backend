@@ -51,7 +51,7 @@ class BannerController{
         let fileURL: string;
         try {
             if(file){
-                const {public_id, url} = await cloudinary.v2.uploader.upload(file.path, {folder: 'alka-industries/images'});
+                const {public_id, url} = await cloudinary.v2.uploader.upload(file.path, {folder: 'alka-industries/banners'});
                 fileId  = public_id;
                 fileURL = url;
             }
