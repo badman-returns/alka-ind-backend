@@ -12,7 +12,7 @@ export class BannerDB {
             db.query(`SELECT ${Tables.BANNER}.id, ${Tables.BANNER}.fileName, ${Tables.BANNER}.fileURL, ${Tables.USER}.name as createdBy, ${Tables.BANNER}.createdOn
                       FROM ${Tables.BANNER}
                       INNER JOIN ${Tables.USER} ON ${Tables.USER}.id=${Tables.BANNER}.createdBy
-                      ORDER BY ${Tables.BANNER}.createdOn DESC
+                      ORDER BY ${Tables.BANNER}.createdOn ASC
                       `, (err, res) => {
                 if (err) {
                     return reject(err);
