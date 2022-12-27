@@ -244,9 +244,9 @@ export default class CreateTablesAndInsertMasterData {
             db.query(`CREATE TABLE IF NOT EXISTS ${Tables.PARTNER} (
                 id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id),
                 name VARCHAR(255) NOT NULL,
-                testimony VARCHAR(255),
-                fileId VARCHAR(255) NOT NULL,
-                fileURL VARCHAR(255) NOT NULL,
+                testimony VARCHAR(500),
+                fileId VARCHAR(255),
+                fileURL VARCHAR(255),
                 createdBy VARCHAR(255) NOT NULL,
                 createdOn DATETIME NOT NULL DEFAULT current_timestamp,
                 updatedOn DATETIME NOT NULL DEFAULT current_timestamp)
