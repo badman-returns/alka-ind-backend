@@ -3,12 +3,12 @@ import { PartnerDB } from "../../models/partner";
 import { ExtendedRequest, ResponseObject } from "../../interfaces";
 import cloudinary from 'cloudinary';
 
-class PartnerController{
-    constructor(){
+class PartnerController {
+    constructor() {
 
     }
 
-    public static getPartners = async(req:ExtendedRequest, res: Response) => {
+    public static getPartners = async (req: ExtendedRequest, res: Response) => {
         let response: ResponseObject<any>;
         try {
             const partners = await PartnerDB.getAllPartner();
@@ -22,26 +22,26 @@ class PartnerController{
         }
         return res.send(response);
     }
-    
-    public static getPartnerById = async(req:ExtendedRequest, res: Response) => {
+
+    public static getPartnerById = async (req: ExtendedRequest, res: Response) => {
         const id = Number(req.params.id);
 
         let response: ResponseObject<any>;
 
-        try{
+        try {
             const partner = await PartnerDB.getPartnerById(id);
             response = {
                 ResponseData: partner,
                 ResponseMessage: 'Partner fetched',
             }
-        } catch(error){
+        } catch (error) {
             console.log(error);
             return res.status(500).end();
         }
         return res.send(response);
     }
 
-    public static insertPartner = async(req: ExtendedRequest, res: Response) => {
+    public static insertPartner = async (req: ExtendedRequest, res: Response) => {
         const name = req.body.name;
         const testimony = req.body.testimony;
         const file = req.file;
@@ -50,14 +50,14 @@ class PartnerController{
         let response: ResponseObject<any>;
         let fileId: string;
         let fileURL: string;
-        
+
         try {
-            if(file){
-                const {public_id, url} = await cloudinary.v2.uploader.upload(file.path, {folder: 'alka-industries/partners'});
+            if (file) {
+                const { public_id, url } = await cloudinary.v2.uploader.upload(file.path, { folder: 'alka-industries/partners' });
                 fileId = public_id;
                 fileURL = url;
             }
-            await PartnerDB.insertPartner(name, fileId, fileURL, createdBy, testimony);
+            await PartnerDB.insertPartner(name, createdBy, testimony, fileId, fileURL,);
             response = {
                 ResponseData: null,
                 ResponseMessage: 'Partner Added Successfully.'
@@ -69,7 +69,7 @@ class PartnerController{
         return res.send(response);
     }
 
-    public static updatePartner = async(req: ExtendedRequest, res:Response) => {
+    public static updatePartner = async (req: ExtendedRequest, res: Response) => {
         const id = Number(req.params.id);
         const name = req.body.name;
         const testimony = req.body.testimony;
@@ -80,24 +80,24 @@ class PartnerController{
         let fileURL: string;
 
         try {
-            if(file){
-                const {public_id, url} = await cloudinary.v2.uploader.upload(file.path, {folder: 'alka-industries/partners'});
+            if (file) {
+                const { public_id, url } = await cloudinary.v2.uploader.upload(file.path, { folder: 'alka-industries/partners' });
                 fileId = public_id
                 fileURL = url
             }
-            await PartnerDB.updatePartnerById(id, name, fileId, fileURL, testimony);
+            await PartnerDB.updatePartnerById(id, name, testimony, fileId, fileURL,);
             response = {
                 ResponseData: null,
                 ResponseMessage: 'Partner updated.'
             }
-        } catch(error){
+        } catch (error) {
             console.log(error);
             return res.status(500).end();
         }
         return res.send(response);
     }
 
-    public static deletePartner = async(req: ExtendedRequest, res: Response) => {
+    public static deletePartner = async (req: ExtendedRequest, res: Response) => {
         const id = Number(req.params.id);
 
         let response: ResponseObject<any>;

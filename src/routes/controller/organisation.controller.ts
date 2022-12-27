@@ -38,7 +38,7 @@ class OrganisationController {
             if (file) {
                 const { public_id, url } = await cloudinary.v2.uploader.upload(file.path, { folder: 'alka-industries/organisation' })
                 fileId = public_id,
-                    fileURL = url
+                fileURL = url
             }
             await OrganisationDB.updateOrganisationInfo(name, phone, email, address, updatedBy, fileId, fileURL);
             response = {
