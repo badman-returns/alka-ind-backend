@@ -239,7 +239,7 @@ export default class CreateTablesAndInsertMasterData {
         });
     }
 
-    public static async createPartnerTable(){
+    public static async createPartnerTable() {
         return new Promise((resolve, reject) => {
             db.query(`CREATE TABLE IF NOT EXISTS ${Tables.PARTNER} (
                 id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id),
@@ -250,19 +250,19 @@ export default class CreateTablesAndInsertMasterData {
                 createdBy VARCHAR(255) NOT NULL,
                 createdOn DATETIME NOT NULL DEFAULT current_timestamp,
                 updatedOn DATETIME NOT NULL DEFAULT current_timestamp)
-                `, (err, res) =>{
-                    if(err){
-                        return reject(err);
-                    }
-                    if(res.length){
-                        return resolve(true);
-                    }
-                    return resolve(null);
-                })
+                `, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (res.length) {
+                    return resolve(true);
+                }
+                return resolve(null);
+            })
         })
     }
 
-    public static async createCategoryTable(){
+    public static async createCategoryTable() {
         return new Promise((resolve, reject) => {
             db.query(`CREATE TABLE IF NOT EXISTS ${Tables.CATEGORY} (
                 id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id),
@@ -270,14 +270,42 @@ export default class CreateTablesAndInsertMasterData {
                 createdBy VARCHAR(255) NOT NULL,
                 createdOn DATETIME NOT NULL DEFAULT current_timestamp)
                 `, (err, res) => {
-                    if(err){
-                        return reject(err);
-                    }
-                    if(res.length){
-                        return resolve(true);
-                    }
-                    return resolve(null);
-                });
+                if (err) {
+                    return reject(err);
+                }
+                if (res.length) {
+                    return resolve(true);
+                }
+                return resolve(null);
+            });
         });
+    }
+
+    public static async createProductTable() {
+        return new Promise((resolve, reject) => {
+            db.query(`CREATE TABLE IF NOT EXISTS ${Tables.PRODUCT} (
+                id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id),
+                categoryId INT NOT NULL,
+                FOREIGN KEY(categoryId) references ${Tables.CATEGORY}(id),
+                name VARCHAR(255) NOT NULL,
+                code VARCHAR(255),
+                description VARCHAR(500),
+                productImageId VARCHAR(255) NOT NULL,
+                productImageURL VARCHAR(255) NOT NULL,
+                productGLBId VARCHAR(255),
+                productGLBURL VARCHAR(255),
+                createdBy VARCHAR(255) NOT NULL,
+                createdOn DATETIME NOT NULL DEFAULT current_timestamp,
+                updatedOn DATETIME NOT NULL DEFAULT current_timestamp)
+                `, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (res.length) {
+                    return resolve(true);
+                }
+                return resolve(null);
+            })
+        })
     }
 };

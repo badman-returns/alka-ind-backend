@@ -86,6 +86,9 @@ class App {
 
       console.log(`Creating Category Table...`);
       await MasterTables.createCategoryTable();
+
+      console.log(`Creating Product Table...`);
+      await MasterTables.createProductTable();
    
     } catch (error) {
       throw new Error(error);
