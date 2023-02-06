@@ -5,3 +5,4 @@ export * from './organisationSetup.model';
 export * from './about.model';
 export * from './partner.model';
 export * from './category.model';
+export * from  './product.model';

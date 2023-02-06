@@ -6,16 +6,17 @@ import { GetAllBanners, GetBannerById } from '../controller/banner.controller';
 import { GetCategories, GetCategoryById } from '../controller/category.controller';
 import { GetOrganisationInfo } from '../controller/organisation.controller';
 import { GetPartnerById, GetPartners } from '../controller/partner.controller';
+import { GetProductById, GetProducts, GetProductsByCategory } from '../controller/product.controller';
 
 class PublicRouting {
     public router: express.Router;
-    public upload = multer({storage: GetStorage()});
-    constructor(){
+    public upload = multer({ storage: GetStorage() });
+    constructor() {
         this.router = express.Router();
         this.configRoutes();
     }
 
-    private configRoutes(){
+    private configRoutes() {
 
         // Organisation Details Routes
         this.router.get('/org-info', GetOrganisationInfo);
@@ -32,10 +33,16 @@ class PublicRouting {
         this.router.get('/partner/:id', GetPartnerById);
 
         // Category Routes
-        this.router.get('/categories',GetCategories);
+        this.router.get('/categories', GetCategories);
         this.router.get('/category/:id', GetCategoryById);
+
+        // Product Routes
+        this.router.get('/products', GetProducts);
+        this.router.get('/product/:id', GetProductById);
+        this.router.get('/products/:categoryId', GetProductsByCategory);
     }
 }
 
 const PublicRouter = new PublicRouting().router;
-export { PublicRouter }
+export { PublicRouter };
+
